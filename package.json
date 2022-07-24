@@ -37,7 +37,7 @@
     "index.js"
   ],
   "dependencies": {
-    "@types/estree-jsx": "^0.0.1",
+    "@types/estree-jsx": "^1.0.0",
     "astring": "^1.8.0",
     "source-map": "^0.7.0"
   },
