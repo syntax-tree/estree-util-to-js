@@ -8,8 +8,15 @@ import {Parser} from 'acorn'
 import acornJsx from 'acorn-jsx'
 import {SourceMapGenerator} from 'source-map'
 import {toJs, jsx} from '../index.js'
+import * as mod from '../index.js'
 
-test('estree-util-from-js', () => {
+test('toJs', () => {
+  assert.deepEqual(
+    Object.keys(mod).sort(),
+    ['jsx', 'toJs'],
+    'should expose the public api'
+  )
+
   assert.deepEqual(
     toJs(fromJs('const a = 1')),
     {value: 'const a = 1;\n', map: undefined},
