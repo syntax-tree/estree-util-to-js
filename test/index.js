@@ -2,20 +2,21 @@
  * @typedef {import('estree-jsx').Program} Program
  */
 
-import test from 'tape'
+import assert from 'node:assert/strict'
+import test from 'node:test'
 import {Parser} from 'acorn'
 import acornJsx from 'acorn-jsx'
 import {SourceMapGenerator} from 'source-map'
 import {toJs, jsx} from '../index.js'
 
-test('estree-util-from-js', (t) => {
-  t.deepEqual(
+test('estree-util-from-js', () => {
+  assert.deepEqual(
     toJs(fromJs('const a = 1')),
     {value: 'const a = 1;\n', map: undefined},
     'should serialize js'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     toJs(fromJs('const a = 1'), {SourceMapGenerator}),
     {
       value: 'const a = 1;\n',
@@ -30,7 +31,7 @@ test('estree-util-from-js', (t) => {
     'should serialize js w/ a source map'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     toJs(fromJs('const a = 1'), {SourceMapGenerator, filePath: 'example.js'}),
     {
       value: 'const a = 1;\n',
@@ -45,43 +46,43 @@ test('estree-util-from-js', (t) => {
     'should serialize js w/ a source map and a file path'
   )
 
-  t.equal(
+  assert.equal(
     toJs(fromJs('<a>1</a>', true), {handlers: jsx}).value,
     '<a>1</a>;\n',
     'should supports jsx (opening and closing tag)'
   )
 
-  t.equal(
+  assert.equal(
     toJs(fromJs('<>1</>', true), {handlers: jsx}).value,
     '<>1</>;\n',
     'should supports jsx (opening and closing fragment)'
   )
 
-  t.equal(
+  assert.equal(
     toJs(fromJs('<a.b />', true), {handlers: jsx}).value,
     '<a.b />;\n',
     'should supports jsx (member name)'
   )
 
-  t.equal(
+  assert.equal(
     toJs(fromJs('<a:b />', true), {handlers: jsx}).value,
     '<a:b />;\n',
     'should supports jsx (namespaced name)'
   )
 
-  t.equal(
+  assert.equal(
     toJs(fromJs('<a b c="d" e={f} {...g} />', true), {handlers: jsx}).value,
     '<a b c="d" e={f} {...g} />;\n',
     'should supports jsx (attributes)'
   )
 
-  t.equal(
+  assert.equal(
     toJs(fromJs('<a b:c />', true), {handlers: jsx}).value,
     '<a b:c />;\n',
     'should supports jsx (namespaced attribute)'
   )
 
-  t.equal(
+  assert.equal(
     toJs(fromJs('<a>empty: {}, comment: {/*b*/}, value: {1}</a>', true), {
       handlers: jsx
     }).value,
@@ -89,15 +90,13 @@ test('estree-util-from-js', (t) => {
     'should supports jsx (expressions)'
   )
 
-  t.equal(
+  assert.equal(
     toJs(fromJs('<a>1 &lt; 2 &gt; 3 &#123; 4 &#125; 5</a>', true), {
       handlers: jsx
     }).value,
     '<a>1 &lt; 2 &gt; 3 &#123; 4 &#125; 5</a>;\n',
     'should supports jsx (text)'
   )
-
-  t.end()
 })
 
 /**
