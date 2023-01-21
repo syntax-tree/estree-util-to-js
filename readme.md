@@ -19,6 +19,11 @@
 *   [API](#api)
     *   [`toJs(tree[, options])`](#tojstree-options)
     *   [`jsx`](#jsx)
+    *   [`Handler`](#handler)
+    *   [`Handlers`](#handlers)
+    *   [`Options`](#options)
+    *   [`Result`](#result)
+    *   [`State`](#state)
 *   [Examples](#examples)
     *   [Example: source maps](#example-source-maps)
     *   [Example: comments](#example-comments)
@@ -50,7 +55,7 @@ It turns JS into esast.
 ## Install
 
 This package is [ESM only][esm].
-In Node.js (version 14.14+, 16.0+, or 18.0+), install with [npm][]:
+In Node.js (version 14.14+ and 16.0+), install with [npm][]:
 
 ```sh
 npm install estree-util-to-js
@@ -59,14 +64,14 @@ npm install estree-util-to-js
 In Deno with [`esm.sh`][esmsh]:
 
 ```js
-import {toJs} from "https://esm.sh/estree-util-to-js@1"
+import {toJs} from 'https://esm.sh/estree-util-to-js@1'
 ```
 
 In browsers with [`esm.sh`][esmsh]:
 
 ```html
 <script type="module">
-  import {toJs} from "https://esm.sh/estree-util-to-js@1?bundle"
+  import {toJs} from 'https://esm.sh/estree-util-to-js@1?bundle'
 </script>
 ```
 
@@ -79,11 +84,7 @@ import {toJs} from 'estree-util-to-js'
 
 const file = String(await fs.readFile('index.js'))
 
-const tree = parse(file, {
-  ecmaVersion: 2022,
-  sourceType: 'module',
-  locations: true
-})
+const tree = parse(file, {ecmaVersion: 2022, sourceType: 'module', locations: true})
 
 // @ts-expect-error: acorn is funky but it works fine.
 console.log(toJs(tree))
@@ -100,46 +101,82 @@ Yields:
 
 ## API
 
-This package exports the identifiers `toJs` and `jsx`.
+This package exports the identifiers [`jsx`][jsx] and [`toJs`][tojs].
 There is no default export.
 
 ### `toJs(tree[, options])`
 
-Serialize an estree ([`Program`][program]) as JavaScript.
+Serialize an estree as JavaScript.
 
-##### `options`
+###### Parameters
 
-Configuration (optional).
+*   `tree` ([`Program`][program])
+    — estree
+*   `options` ([`Options`][options])
+    — configuration
 
-###### `options.SourceMapGenerator`
+###### Returns
 
-Generate a source map by passing the `SourceMapGenerator` class from
-[`source-map`][source-map] in.
-This works if there is positional info on nodes.
-
-###### `options.filePath`
-
-Path to original input file (`string`, example: `path/to/input.js`).
-Only used in source map.
-
-###### `options.handlers`
-
-Object mapping node types to functions handling the corresponding nodes
-(`Record<string, Handler>`).
-Each `Handler` is passed the corresponding node and `astring`s internal state.
-See `lib/jsx.js` for examples.
-
-##### Returns
-
-An object with two fields:
-
-*   `value` (`string`) — serialized JavaScript
-*   `map` (`Object?`) — source map as (parsed) JSON, if `SourceMapGenerator` is
-    passed
+Result, optionally with source map ([`Result`][result]).
 
 ### `jsx`
 
-Map of handlers to handle the nodes of JSX extensions in JavaScript.
+Map of handlers to handle the nodes of JSX extensions in JavaScript ([`Handlers`][handlers]).
+
+### `Handler`
+
+Handle a particular node (TypeScript type).
+
+###### Parameters
+
+*   `this` (`Generator`)
+    — `astring` generator
+*   `node` ([`Node`][node])
+    — node to serialize
+*   `state` ([`State`][state])
+    — info passed around
+
+###### Returns
+
+Nothing (`void`).
+
+### `Handlers`
+
+Handlers of nodes (TypeScript type).
+
+###### Type
+
+```ts
+type Handlers = Partial<Record<Node['type'], Handler>>
+```
+
+### `Options`
+
+Configuration (TypeScript type).
+
+###### Fields
+
+*   `SourceMapGenerator` ([`SourceMapGenerator`][source-map])
+    — generate a source map with this class
+*   `filePath` (`string`)
+    — path to original input file
+*   `handlers` ([`Handlers`][handlers])
+    — extra handlers
+
+### `Result`
+
+Result (TypeScript type).
+
+###### Fields
+
+*   `value` (`string`)
+    — serialized JavaScript
+*   `map` (`object` or `undefined`)
+    — source map as (parsed) JSON
+
+### `State`
+
+State from `astring` (TypeScript type).
 
 ## Examples
 
@@ -270,7 +307,8 @@ Yields:
 ## Types
 
 This package is fully typed with [TypeScript][].
-It exports the additional types `Options`, `Handler`, `Handlers`, and `State`.
+It exports the additional types [`Handler`][handler], [`Handlers`][handlers],
+[`Options`][options], [`Result`][result], and `State`.
 
 ## Compatibility
 
@@ -351,4 +389,20 @@ abide by its terms.
 
 [program]: https://github.com/estree/estree/blob/master/es2015.md#programs
 
+[node]: https://github.com/estree/estree/blob/master/es5.md#node-objects
+
 [source-map]: https://github.com/mozilla/source-map
+
+[jsx]: #jsx
+
+[tojs]: #tojstree-options
+
+[handler]: #handler
+
+[handlers]: #handlers
+
+[options]: #options
+
+[state]: #state
+
+[result]: #result
