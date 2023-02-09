@@ -21,6 +21,7 @@
     *   [`jsx`](#jsx)
     *   [`Handler`](#handler)
     *   [`Handlers`](#handlers)
+    *   [`Map`](#map)
     *   [`Options`](#options)
     *   [`Result`](#result)
     *   [`State`](#state)
@@ -101,7 +102,7 @@ Yields:
 
 ## API
 
-This package exports the identifiers [`jsx`][jsx] and [`toJs`][tojs].
+This package exports the identifiers [`jsx`][api-jsx] and [`toJs`][api-to-js].
 There is no default export.
 
 ### `toJs(tree[, options])`
@@ -112,16 +113,17 @@ Serialize an estree as JavaScript.
 
 *   `tree` ([`Program`][program])
     — estree
-*   `options` ([`Options`][options])
+*   `options` ([`Options`][api-options])
     — configuration
 
 ###### Returns
 
-Result, optionally with source map ([`Result`][result]).
+Result, optionally with source map ([`Result`][api-result]).
 
 ### `jsx`
 
-Map of handlers to handle the nodes of JSX extensions in JavaScript ([`Handlers`][handlers]).
+Map of handlers to handle the nodes of JSX extensions in JavaScript
+([`Handlers`][api-handlers]).
 
 ### `Handler`
 
@@ -133,7 +135,7 @@ Handle a particular node (TypeScript type).
     — `astring` generator
 *   `node` ([`Node`][node])
     — node to serialize
-*   `state` ([`State`][state])
+*   `state` ([`State`][api-state])
     — info passed around
 
 ###### Returns
@@ -150,6 +152,10 @@ Handlers of nodes (TypeScript type).
 type Handlers = Partial<Record<Node['type'], Handler>>
 ```
 
+### `Map`
+
+Raw source map from `source-map` (TypeScript type).
+
 ### `Options`
 
 Configuration (TypeScript type).
@@ -160,7 +166,7 @@ Configuration (TypeScript type).
     — generate a source map with this class
 *   `filePath` (`string`)
     — path to original input file
-*   `handlers` ([`Handlers`][handlers])
+*   `handlers` ([`Handlers`][api-handlers])
     — extra handlers
 
 ### `Result`
@@ -171,7 +177,7 @@ Result (TypeScript type).
 
 *   `value` (`string`)
     — serialized JavaScript
-*   `map` (`object` or `undefined`)
+*   `map` ([`Map`][api-map] or `undefined`)
     — source map as (parsed) JSON
 
 ### `State`
@@ -307,8 +313,12 @@ Yields:
 ## Types
 
 This package is fully typed with [TypeScript][].
-It exports the additional types [`Handler`][handler], [`Handlers`][handlers],
-[`Options`][options], [`Result`][result], and `State`.
+It exports the additional types [`Handler`][api-handler],
+[`Handlers`][api-handlers],
+[`Map`][api-map],
+[`Options`][api-options],
+[`Result`][api-result], and
+[`State`][api-state].
 
 ## Compatibility
 
@@ -393,16 +403,18 @@ abide by its terms.
 
 [source-map]: https://github.com/mozilla/source-map
 
-[jsx]: #jsx
+[api-jsx]: #jsx
 
-[tojs]: #tojstree-options
+[api-to-js]: #tojstree-options
 
-[handler]: #handler
+[api-handler]: #handler
 
-[handlers]: #handlers
+[api-handlers]: #handlers
 
-[options]: #options
+[api-map]: #map
 
-[state]: #state
+[api-options]: #options
 
-[result]: #result
+[api-state]: #state
+
+[api-result]: #result
