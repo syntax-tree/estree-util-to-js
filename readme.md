@@ -140,7 +140,7 @@ Handle a particular node (TypeScript type).
 
 ###### Returns
 
-Nothing (`void`).
+Nothing (`undefined`).
 
 ### `Handlers`
 
@@ -287,7 +287,7 @@ Modified example from § Use above:
 -import {toJs} from 'estree-util-to-js'
 +import {Parser} from 'acorn'
 +import acornJsx from 'acorn-jsx'
-+import {toJs, jsx} from 'estree-util-to-js'
++import {jsx, toJs} from 'estree-util-to-js'
 
 -const file = String(await fs.readFile('index.js'))
 +const file = '<>{1 + 1}</>'

@@ -78,7 +78,7 @@
     "ignoreCatch": true,
     "#": "needed `any`s",
     "ignoreFiles": [
-      "lib/types.d.ts"
+      "lib/index.d.ts"
     ],
     "strict": true
   },
