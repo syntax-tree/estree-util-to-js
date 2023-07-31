@@ -65,14 +65,14 @@ npm install estree-util-to-js
 In Deno with [`esm.sh`][esmsh]:
 
 ```js
-import {toJs} from 'https://esm.sh/estree-util-to-js@1'
+import {toJs} from 'https://esm.sh/estree-util-to-js@2'
 ```
 
 In browsers with [`esm.sh`][esmsh]:
 
 ```html
 <script type="module">
-  import {toJs} from 'https://esm.sh/estree-util-to-js@1?bundle'
+  import {toJs} from 'https://esm.sh/estree-util-to-js@2?bundle'
 </script>
 ```
 

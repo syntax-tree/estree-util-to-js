@@ -1,6 +1,6 @@
 {
   "name": "estree-util-to-js",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "description": "estree (and esast) utility to serialize to JavaScript",
   "license": "MIT",
   "keywords": [
