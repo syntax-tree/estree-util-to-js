@@ -6,12 +6,12 @@ import assert from 'node:assert/strict'
 import test from 'node:test'
 import {Parser} from 'acorn'
 import acornJsx from 'acorn-jsx'
+import {jsx, toJs} from 'estree-util-to-js'
 import {SourceMapGenerator} from 'source-map'
-import {jsx, toJs} from '../index.js'
 
 test('toJs', async function (t) {
   await t.test('should expose the public api', async function () {
-    assert.deepEqual(Object.keys(await import('../index.js')).sort(), [
+    assert.deepEqual(Object.keys(await import('estree-util-to-js')).sort(), [
       'jsx',
       'toJs'
     ])
